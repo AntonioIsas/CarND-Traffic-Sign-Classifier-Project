@@ -17,13 +17,10 @@ The goals / steps of this project are the following:
 [image1]: ./examples/dataSet_dist.png "Visualization"
 [imgSample]: ./examples/sample_images.png "Sample Images"
 [preprocessed]: ./examples/preprocessed.png "Sample Images"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[newImages]: ./examples/new_images.png "New Images"
+
+[yield]: ./examples/yieldSign.png "Yield"
+[featureMap]: ./examples/featureMap.png "Feature Map"
 
 ## Rubric Points
 ---
@@ -70,20 +67,6 @@ As a last step, I normalized the image data to provide numerical stability and t
 
 #### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
-I am using a LeNet5 with dropout, it consists of 2 convolutional layers and 3 fully connected ones
-
-First layer accepts an input of shape 32x32x1 and outputs a 28x28x6 with a relu activation, after this we apply the dropout if needed and a pooling for a final output of 14x14x6
-
-Second layer converts the output to a 10x10x16 runs it through relu and applies any needed dropout, the pooling in this layer outputs a 5x5x16
-
-Then the data is flattened for the fully connected layers with an output of 400
-
-The first fully connected layer uses relu and dropout as well and gives an output of 120
-
-Second fully connected layer is just the matrix multiplication with dropout and an output of 84
-
-The last layer is again a multiplication this time with no dropout and an output of 43 which are the labels we have in the data  
-
 My final model consisted of the following layers:
 
 | Layer         		|     Description	        					|
@@ -109,70 +92,142 @@ My final model consisted of the following layers:
 
 #### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+To train the model, I used a batch size of 50, and 100 epochs, using this small batch size allows the model to increase accuracy faster instead of using many more epochs
+learning rate of .001
+and beta of .001
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?
-* test set accuracy of ?
+* training set accuracy of **99**
+* validation set accuracy of **95**
+* test set accuracy of **93**
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+I decided to test LeNet-5 as I had used it previously and it had good results classifying images.
+After the initial test it had a good accuracy so I choose to keep this model and just tune it as needed, after preprocessing the images and tunning the parameters I noticed the training accuracy at 100 while the validation was below 93, meaning the model was over fitting so I added regularization and dropout this allows the accuracy to go up to 95
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+The validation and test accuracy have a good percentage indicating that the model is working well
 
+### Test a Model on New Images
 
-###Test a Model on New Images
+#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
+Here are the new images, I grabbed this from a video of someone driving through Germany
 
-Here are five German traffic signs that I found on the web:
+![alt text][newImages]
 
-![alt text][image4] ![alt text][image5] ![alt text][image6]
-![alt text][image7] ![alt text][image8]
+The first 5 images were too clear and the model always classified them correctly so I grabbed another one which is harder because its darker smaller and is a little blurry, in this case it also classifies correctly but its softmax probability is not as high as in the other cases
 
-The first image might be difficult to classify because ...
-
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
 | Image			        |     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-| Stop Sign      		| Stop sign   									|
-| U-turn     			| U-turn 										|
+| General caution     		| General caution									|
+| No entry 			| No entry								  |
+| Ahead only		| Ahead only   							|
+| Keep right		| Keep right  							|
+| 120 km/h	    | 120 km/h					 				|
+| 80 km/h	      | 80 km/h					 				  |
 | Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Yield					| Yield											|
+| 30 km/h	      | 30 km/h					 				  |
+| Road work			| Road work										|
 
+The model was able to correctly guess 10 of the 10 traffic signs, which gives an accuracy of 100%. This compares favorably to the accuracy on the test set of 93%
+Initially I had only 5 images but wanted to test on some harder ones so I grabbed 5 more
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+The code for making predictions on my final model is located in the 16th cell of the Ipython notebook.
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+For all the images that I found the model was very confident of the answer with the smallest one being the 9th image with only 84, all others where above 93
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+1. *General caution*
 
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-| .60         			| Stop sign   									|
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+| .99993       			    | General caution  									|
+| .00006  				      | Pedestrians 										|
+| .00001			          | Traffic signals									|
 
+2. *No entry*
 
-For the second image ...
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 1.00000      			    | No entry   									|
+
+3. *Ahead only*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 1.00000      			    | Ahead only   									|
+
+4. *Keep right*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 1.00000      			    | Keep right  									|
+
+5. *Speed limit (120km/h)*
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 0.99113      			    | Speed limit (120km/h)									|
+| 0.00538    				    | Speed limit (100km/h)										|
+| 0.00155					      | Speed limit (70km/h)										|
+| 0.00081      			    | Speed limit (80km/h)					 				|
+| 0.00077			          | Speed limit (20km/h)     							|
+
+6. *Speed limit (80km/h)*
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 0.93456     			    | Speed limit (80km/h)									|
+| 0.02827   				    | Speed limit (50km/h)										|
+| 0.01556					      | Speed limit (60km/h)										|
+| 0.01229     			    | Speed limit (70km/h)					 				|
+| 0.00331 		          | No passing for vehicles over 3.5 metric tons    							|
+
+7. *Yield*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 1.00000      			    | Yield  									|
+
+8. *Yield*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 0.99445    			      | Yield								|
+| 0.00312   				    | Go straight or right									|
+| 0.00134   			      | Ahead only									|
+| 0.00022     			    | Turn right ahead					 				|
+| 0.00021 		          | Turn left ahead    							|
+
+9. *Speed limit (30km/h)*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 0.84942      			    | Speed limit (30km/h)									|
+| 0.07271    				    | Speed limit (70km/h)										|
+| 0.02658					      | Speed limit (20km/h)										|
+| 0.02129      			    | Speed limit (50km/h)					 				|
+| 0.00787			          | Speed limit (80km/h)     							|
+
+10. *Road work*
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+| 0.99210      			    | Road work								|
+| 0.00355    				    | Dangerous curve to the right										|
+| 0.00138					      | General caution										|
+| 0.00041     			    | Keep right				 				|
+| 0.00038			          | Traffic signals     							|
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+#### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+
+For this yield image, the feature maps seems to be identifying the borders, there seems to be one feature map for each border and some of them are combined
+![alt text][yield]
+
+![alt text][featureMap]
