@@ -112,11 +112,12 @@ The validation and test accuracy have a good percentage indicating that the mode
 
 #### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are the new images, I grabbed this from a video of someone driving through Germany
+Here are some of the new images, I grabbed this from a video of someone driving through Germany
 
 ![alt text][newImages]
 
 The first 5 images were too clear and the model always classified them correctly so I grabbed another one which is harder because its darker smaller and is a little blurry, in this case it also classifies correctly but its softmax probability is not as high as in the other cases
+later I added some more images to further test the model but the performance was still very good
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -171,6 +172,7 @@ For all the images that I found the model was very confident of the answer with 
 | 1.00000      			    | Keep right  									|
 
 5. *Speed limit (120km/h)*
+
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
 | 0.99113      			    | Speed limit (120km/h)									|
@@ -180,6 +182,7 @@ For all the images that I found the model was very confident of the answer with 
 | 0.00077			          | Speed limit (20km/h)     							|
 
 6. *Speed limit (80km/h)*
+
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
 | 0.93456     			    | Speed limit (80km/h)									|
@@ -228,6 +231,7 @@ For all the images that I found the model was very confident of the answer with 
 #### 1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
 
 For this yield image, the feature maps seems to be identifying the borders, there seems to be one feature map for each border and some of them are combined
+
 ![alt text][yield]
 
 ![alt text][featureMap]
